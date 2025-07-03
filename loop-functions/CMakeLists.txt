@@ -6,4 +6,4 @@ link_directories(
     )
 
 #add_subdirectory(moca)
-add_subdirectory(habanero)
+add_subdirectory(communication)
