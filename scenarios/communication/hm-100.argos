@@ -3,11 +3,11 @@
   <framework>
     <experiment length="120" ticks_per_second="10" random_seed="0" />
   </framework>
-  <loop_functions library="/home/robotmaster/clean_habanero/habanero-loopfunctions/build/loop-functions/communication/libcommunication_homing_loopfunc.so" label="comm_hom_loop_function">
+  <loop_functions library="/home/robotmaster/tamarindo-loopfunctions/build/loop-functions/communication/libcommunication_homing_loopfunc.so" label="comm_hom_loop_function">
     <params number_robots="16" dist_radius="1.0" maximization="true" stm_steps="1200" agg_corner="0"/>
   </loop_functions>
   <controllers>
-    <automode_controller id="heterogeneity1" library="/home/robotmaster/clean_habanero/AutoMoDe-habanero/build/src/libautomode.so">
+    <automode_controller id="heterogeneity1" library="/home/robotmaster/AutoMoDe-tamarindo/build/src/libautomode.so">
       <actuators>
         <epuck_wheels implementation="default" noise_std_dev="0.05" />
         <epuck_rgb_leds implementation="default" medium="leds" />
