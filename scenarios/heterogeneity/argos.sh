@@ -1,2 +1,2 @@
 #!/usr/bin/env python
-argos3 -c chain_robots.argos
+argos3 -c aggregation.argos

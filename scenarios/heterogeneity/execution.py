@@ -57,7 +57,7 @@ def run_Argos(argos):
     subprocess.run(["bash", 'argos.sh'], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
 # Example usage
-argos_file_path = 'chain_robots.argos'
+argos_file_path = 'aggregation.argos'
 
 p1 = 0.9
 p2 = 0.5
@@ -68,13 +68,38 @@ p = 0.9
 #f'--nstates 2 --s0 8 --vel0 1 --cle0 0 --clr0 3 --n0 2 --n0x0 0 --c0x0 0 --p0x0 {p1} --n0x1 0 --c0x1 2 --p0x1 {p1} --s1 9 --vel1 1 --cle1 0 --clr1 2 --n1 2 --n1x0 0 --c1x0 2 --p1x0 {p1} --n1x1 0 --c1x1 0 --p1x1 {p1}',
 
 ####### Chain of robots #######
-fsm_config_dict = {
-    1: '--nstates 1 --s0 3 --fov0 1 --vel0 1.0 --clr0 2 --phe0 1',
-    2: '--nstates 1 --s0 3 --fov0 1 --vel0 1.0 --clr0 1 --phe0 1',
-    3: '--nstates 1 --s0 2 --fov0 1 --vel0 1.0 --clr0 3 --phe0 1',
-}
-new_quantity = [25,15,10]
+# fsm_config_dict = {
+#     1: '--nstates 1 --s0 3 --fov0 1 --vel0 1.0 --clr0 2 --phe0 1',
+#     2: '--nstates 1 --s0 3 --fov0 1 --vel0 1.0 --clr0 1 --phe0 1',
+#     3: '--nstates 1 --s0 2 --fov0 1 --vel0 1.0 --clr0 3 --phe0 1',
+# }
+# new_quantity = [20,15,10]
 
+
+########## Foraging ##########
+
+# fsm_config_dict = {
+#     1: '--nstates 1 --s0 9 --vel0 1 --cle0 2 --clr0 3 --phe0 1 --fov0 0',
+#     2: '--nstates 1 --s0 9 --vel0 1 --cle0 3 --clr0 2 --phe0 1 --fov0 0',
+#     3: '--nstates 1 --s0 9 --vel0 1 --cle0 3 --clr0 2 --phe0 1 --fov0 0',
+#     4: '--nstates 1 --s0 9 --vel0 1 --cle0 3 --clr0 2 --phe0 1 --fov0 0'
+# }
+# new_quantity = [1, 1, 1, 1]
+# fsm_config_dict = {
+#     1: '--nstates 1 --s0 9 --vel0 1 --cle0 5 --clr0 1 --phe0 0 --fov0 1',
+#     2: '--nstates 1 --s0 9 --vel0 1 --cle0 3 --clr0 4 --phe0 0 --fov0 1',
+#     3: '--nstates 1 --s0 9 --vel0 1 --cle0 2 --clr0 3 --phe0 0 --fov0 1',
+#     4: '--nstates 1 --s0 9 --vel0 1 --cle0 1 --clr0 2 --phe0 0 --fov0 1'
+# }
+# new_quantity = [3, 3, 3, 3]
+
+fsm_config_dict = {
+    1: '--nstates 1 --s0 9 --vel0 1 --cle0 4 --clr0 1 --phe0 0 --fov0 1',
+    2: '--nstates 1 --s0 9 --vel0 1 --cle0 3 --clr0 4 --phe0 0 --fov0 1',
+    3: '--nstates 1 --s0 9 --vel0 1 --cle0 2 --clr0 3 --phe0 0 --fov0 1',
+    4: '--nstates 1 --s0 9 --vel0 1 --cle0 1 --clr0 2 --phe0 0 --fov0 1'
+}
+new_quantity = [2, 2, 2, 2]
 ####### Prueba tandem recruiting #######
 
 # fsm_config_dict = {
@@ -88,7 +113,7 @@ new_quantity = [25,15,10]
 # new_quantity = [1,1,0,0]
 
 
-total_robots = new_quantity*4
+total_robots = new_quantity
 
 for n in range(1,len(new_quantity)+1):
     controller_id = 'heterogeneity'+str(n)

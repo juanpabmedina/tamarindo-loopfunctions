@@ -93,7 +93,7 @@ void HabDecLoopFunction::PostStep() {
     TimerControl();
     MocaControl();
     UpdatePhormicaState();
-    // LOG << m_fObjectiveFunction << std::endl;
+    // LOG << m_unClock << std::endl;
 }
 
 /****************************************/
@@ -127,45 +127,33 @@ Real HabDecLoopFunction::GetObjectiveFunction() {
 
 void HabDecLoopFunction::MocaControl() {
 
-    if (m_unClock == m_unStopTime) {
-        CSpace::TMapPerType& tBlocksMap = GetSpace().GetEntitiesByType("block");
-        UInt32 unBlocksID = 0;
-        for (CSpace::TMapPerType::iterator it = tBlocksMap.begin(); it != tBlocksMap.end(); ++it) {
-            CBlockEntity* pcBlock = any_cast<CBlockEntity*>(it->second);
-
-            switch (unBlocksID)
-            {
-            case 5:
-                pcBlock->GetLEDEquippedEntity().SetAllLEDsColors(CColor::BLACK);
-                break;
-
-            case 6:
-                pcBlock->GetLEDEquippedEntity().SetAllLEDsColors(CColor::BLACK);
-                break;
-
-            case 7:
-                pcBlock->GetLEDEquippedEntity().SetAllLEDsColors(CColor::BLACK);
-                break;
-
-            case 13:
-                pcBlock->GetLEDEquippedEntity().SetAllLEDsColors(CColor::BLACK);
-                break;
-
-            case 14:
-                pcBlock->GetLEDEquippedEntity().SetAllLEDsColors(CColor::BLACK);
-                break;
-
-            case 15:
-                pcBlock->GetLEDEquippedEntity().SetAllLEDsColors(CColor::BLACK);
-                break;
-
-            default:
-                break;
-            }
-
-            // unBlocksID += 1;
+  CSpace::TMapPerType& tBlocksMap = GetSpace().GetEntitiesByType("block");
+  UInt32 unBlocksID = 0;
+  for (CSpace::TMapPerType::iterator it = tBlocksMap.begin(); it != tBlocksMap.end(); ++it) {
+      CBlockEntity* pcBlock = any_cast<CBlockEntity*>(it->second);
+        std::string strBlockId = pcBlock->GetId().substr(6,2);
+        UInt32 nBlockId = std::stoi(strBlockId);
+      pcBlock->GetLEDEquippedEntity().Enable();
+      pcBlock->GetLEDEquippedEntity().SetAllLEDsColors(CColor::BLACK);
+    //   LOG << nBlockId << std::endl;
+    if (m_unClock >= 0 && m_unClock <= 2000){
+            if (nBlockId >= 0 && nBlockId <= 1 || nBlockId >= 14 && nBlockId <= 15) {
+            pcBlock->GetLEDEquippedEntity().SetAllLEDsColors(CColor::RED);
         }
     }
+    else if (unBlocksID >= 2 && unBlocksID <= 5 && m_unClock > 2000 && m_unClock <= 4000) {
+        pcBlock->GetLEDEquippedEntity().SetAllLEDsColors(CColor::YELLOW);
+    }
+    else if (unBlocksID >= 6 && unBlocksID <= 9 && m_unClock >4000 && m_unClock <= 6000) {
+        pcBlock->GetLEDEquippedEntity().SetAllLEDsColors(CColor::GREEN);
+    }
+    else if (unBlocksID >= 10 && unBlocksID <= 13 && m_unClock > 6000 && m_unClock <= 8000) {
+        pcBlock->GetLEDEquippedEntity().SetAllLEDsColors(CColor::BLUE);
+    }
+
+
+    unBlocksID += 1;
+  }
 }
 
 /****************************************/
@@ -379,22 +367,6 @@ void HabDecLoopFunction::InitMocaState() {
         UInt32 nBlockId = std::stoi(strBlockId);
       pcBlock->GetLEDEquippedEntity().Enable();
       pcBlock->GetLEDEquippedEntity().SetAllLEDsColors(CColor::BLACK);
-      LOG << nBlockId << std::endl;
-    if (nBlockId >= 0 && nBlockId <= 1 || nBlockId >= 22 && nBlockId <= 23) {
-        pcBlock->GetLEDEquippedEntity().SetAllLEDsColors(CColor::RED);
-    }
-    else if (unBlocksID >= 4 && unBlocksID <= 7) {
-        pcBlock->GetLEDEquippedEntity().SetAllLEDsColors(CColor::YELLOW);
-    }
-    else if (unBlocksID >= 10 && unBlocksID <= 13) {
-        pcBlock->GetLEDEquippedEntity().SetAllLEDsColors(CColor::GREEN);
-    }
-    else if (unBlocksID >= 16 && unBlocksID <= 19) {
-        pcBlock->GetLEDEquippedEntity().SetAllLEDsColors(CColor::BLUE);
-    }
-
-
-    unBlocksID += 1;
   }
 }
 
@@ -424,8 +396,8 @@ CVector3 HabDecLoopFunction::GetRandomPosition() {
   Real a;
   Real b;
 
-  a = m_pcRng->Uniform(CRange<Real>(-0.455f, 0.455f));
-  b = m_pcRng->Uniform(CRange<Real>(-0.705f, 0.705f));
+  a = m_pcRng->Uniform(CRange<Real>(-0.255f, 0.255f));
+  b = m_pcRng->Uniform(CRange<Real>(-0.505f, 0.505f));
 
   Real fPosX = a;
   Real fPosY = b;

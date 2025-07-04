@@ -1,9 +1,9 @@
 <argos-configuration>
   <framework>
-    <experiment length="180" ticks_per_second="10" random_seed="0" />
+    <experiment length="250" ticks_per_second="10" random_seed="0" />
   </framework>
   <loop_functions library="/home/robotmaster/argos3-installation/habanero/habanero-loopfunctions/build/loop-functions/heterogeneity/libhetero_ch_loopfunc.so" label="hetero_ch_loop_function">
-    <params number_robots="[25, 15, 10, 25, 15, 10, 25, 15, 10, 25, 15, 10]" dist_radius="1.0" maximization="false" />
+    <params number_robots="[20, 15, 10]" dist_radius="1.0" maximization="false" />
   </loop_functions>
   <controllers>
     <automode_controller id="heterogeneity1" library="/home/robotmaster/argos3-installation/habanero/AutoMoDe-habanero/build/src/libautomode.so">
@@ -57,6 +57,23 @@
       </sensors>
       <params readable="true" history="false" fsm-config="--nstates 1 --s0 2 --fov0 1 --vel0 1.0 --clr0 3 --phe0 1" />
     </automode_controller>
+    <automode_controller id="heterogeneity4" library="/home/robotmaster/argos3-installation/habanero/AutoMoDe-habanero/build/src/libautomode.so">
+      <actuators>
+        <epuck_wheels implementation="default" noise_std_dev="0.05" />
+        <epuck_rgb_leds implementation="default" medium="leds" />
+        <epuck_range_and_bearing implementation="medium" medium="rab" data_size="4" range="0.5" />
+        <epuck_base_leds implementation="default" medium="leds" />
+        <epuck_ground_leds ground_led_pwm="10" implementation="default" medium="leds" />
+      </actuators>
+      <sensors>
+        <epuck_proximity implementation="default" show_rays="false" noise_level="0.05" calibrated="true" />
+        <epuck_range_and_bearing implementation="medium" medium="rab" data_size="4" noise_std_deviation="1.5" loss_probability="0.85" calibrated="true" />
+        <epuck_light implementation="default" show_rays="false" noise_level="0.05" calibrated="true" />
+        <epuck_ground implementation="rot_z_only" noise_level="0.05" calibrated="true" />
+        <epuck_omnidirectional_camera implementation="rot_z_only" medium="leds" show_rays="false" />
+      </sensors>
+      <params readable="true" history="false" fsm-config="--nstates 1 --s0 8 --vel0 1 --cle0 2 --clr0 1" />
+    </automode_controller>
   </controllers>
   <arena size="2, 2, 0.30" center="0,0,0">
     <floor id="floor" source="loop_functions" pixels_per_meter="300" />
@@ -64,7 +81,7 @@
     <distribute id="swarm1">
       <position method="uniform" min="-1,-1,0" max="1,1,0" />
       <orientation method="gaussian" mean="0,0,0" std_dev="360,0,0" />
-      <entity quantity="25" max_trials="100">
+      <entity quantity="20" max_trials="100">
         <e-puck id="epuck1">
           <controller config="heterogeneity1" />
         </e-puck>
